@@ -48,6 +48,7 @@
             groupBox3 = new GroupBox();
             textBoxCari = new TextBox();
             btnCari = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -260,11 +261,21 @@
             btnCari.UseVisualStyleBackColor = false;
             btnCari.Click += btnCari_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(653, 317);
+            button1.Name = "button1";
+            button1.Size = new Size(195, 34);
+            button1.TabIndex = 5;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // FormDataBuku
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1499, 677);
+            Controls.Add(button1);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
@@ -303,5 +314,6 @@
         private GroupBox groupBox3;
         private TextBox textBoxCari;
         private Button btnCari;
+        private Button button1;
     }
 }
