@@ -48,7 +48,9 @@
             groupBox3 = new GroupBox();
             textBoxCari = new TextBox();
             btnCari = new Button();
-            button1 = new Button();
+            btnPrev = new Button();
+            btnNext = new Button();
+            labelPage = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -172,6 +174,7 @@
             btnReload.TabIndex = 4;
             btnReload.Text = "Reload";
             btnReload.UseVisualStyleBackColor = false;
+            btnReload.Click += btnReload_Click;
             // 
             // btnClear
             // 
@@ -261,21 +264,43 @@
             btnCari.UseVisualStyleBackColor = false;
             btnCari.Click += btnCari_Click;
             // 
-            // button1
+            // btnPrev
             // 
-            button1.Location = new Point(653, 317);
-            button1.Name = "button1";
-            button1.Size = new Size(195, 34);
-            button1.TabIndex = 5;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
+            btnPrev.Location = new Point(653, 317);
+            btnPrev.Name = "btnPrev";
+            btnPrev.Size = new Size(195, 52);
+            btnPrev.TabIndex = 5;
+            btnPrev.Text = "Prev";
+            btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
+            // 
+            // btnNext
+            // 
+            btnNext.Location = new Point(863, 317);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(195, 52);
+            btnNext.TabIndex = 6;
+            btnNext.Text = "Next";
+            btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
+            // 
+            // labelPage
+            // 
+            labelPage.AutoSize = true;
+            labelPage.Location = new Point(1212, 331);
+            labelPage.Name = "labelPage";
+            labelPage.Size = new Size(147, 25);
+            labelPage.TabIndex = 8;
+            labelPage.Text = "Halaman 1 dari 2";
             // 
             // FormDataBuku
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1499, 677);
-            Controls.Add(button1);
+            Controls.Add(labelPage);
+            Controls.Add(btnNext);
+            Controls.Add(btnPrev);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
@@ -290,6 +315,7 @@
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -314,6 +340,8 @@
         private GroupBox groupBox3;
         private TextBox textBoxCari;
         private Button btnCari;
-        private Button button1;
+        private Button btnNext;
+        private Button btnPrev;
+        private Label labelPage;
     }
 }

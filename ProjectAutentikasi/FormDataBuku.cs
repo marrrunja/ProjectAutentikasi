@@ -13,10 +13,17 @@ namespace ProjectAutentikasi
     public partial class FormDataBuku : Form
     {
         private int selectedId = -1;
+
+        int pageSize = 2;
+        int currentPage = 1;
+        int totalPage = 1;
+        int totalRecords = 0;
+
+        bool isFiltered = false;
+
         public FormDataBuku()
         {
             InitializeComponent();
-            loadData();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -124,6 +131,9 @@ namespace ProjectAutentikasi
 
         private void FormDataBuku_Load(object sender, EventArgs e)
         {
+            currentPage = 1;
+            isFiltered = false;
+            TampilkanDataDefault();
 
         }
 
@@ -232,10 +242,43 @@ namespace ProjectAutentikasi
             }
 
         }
+        private void TampilkanDataDefault()
+        {
+            using (MySqlConnection conn = new MySqlConnection(DbConfig.ConnStr))
+            {
+                conn.Open();
+
+                string countQuery = "SELECT COUNT(*) FROM buku";
+                MySqlCommand countCmd = new MySqlCommand(countQuery, conn);
+
+                totalRecords = Convert.ToInt32(countCmd.ExecuteScalar());
+
+                totalPage = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+                if (currentPage > totalPage) currentPage = totalPage;
+                if (currentPage < 1) currentPage = 1;
+
+                int offset = (currentPage - 1) * pageSize;
+
+                String query = "SELECT id, judul, penulis, penerbit, tahun_terbit " +
+                               "FROM buku ORDER BY id DESC LIMIT @limit OFFSET @offset";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@limit", pageSize);
+                cmd.Parameters.AddWithValue("@offset", offset);
+
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
+        }
 
         private void btnCari_Click(object sender, EventArgs e)
         {
             TampilkanDataFiltered();
+            currentPage = 1;
+            isFiltered = true;
 
         }
 
@@ -244,9 +287,31 @@ namespace ProjectAutentikasi
 
         }
 
-        private void textBoxCari_TextChanged(object sender, EventArgs e)
+        private void btnNext_Click(object sender, EventArgs e)
         {
+            if (currentPage < totalPage)
+            {
+                currentPage++;
+                if (isFiltered) TampilkanDataFiltered();
+                else TampilkanDataDefault();
+            }
+        }
 
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                if (isFiltered) TampilkanDataFiltered();
+                else TampilkanDataDefault();
+            }
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            currentPage = 1;
+            isFiltered = false;
+            TampilkanDataDefault();
         }
     }
 }
